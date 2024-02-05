@@ -139,6 +139,16 @@
         </div>
 
     </main>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+      integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"
+    ></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
     <button class="randomize">randomize</button>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -181,19 +191,14 @@ var color = d3.scale.ordinal()
 	.domain(["Lorem ipsum", "dolor sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor", "incididunt"])
 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
-function randomData (){
-	var labels = color.domain();
-	return labels.map(function(label){
-		return { label: label, value: Math.random() }
-	});
-}
-
-change(randomData());
-
-d3.select(".randomize")
-	.on("click", function(){
-		change(randomData());
-	});
+    axios.get("/budget").then((res) => {
+        console.log(res);
+        var data = res.data.myBudget.map((obj) => {
+          return { label: obj.title, value: obj.budget };
+        });
+        console.log(data);
+        change(data);
+      });
 
 
 function change(data) {
