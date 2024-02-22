@@ -25,6 +25,7 @@ export class HomepageComponent implements OnInit {
   }
 
   getData(): void {
+    const chartdata = axios.get("../server/budget.json")
     this.dataSource = [
       {
         title: 'Eat out',
